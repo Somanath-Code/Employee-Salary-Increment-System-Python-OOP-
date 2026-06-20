@@ -1,38 +1,57 @@
-# Employee-Salary-Increment-System-Python-OOP-
- A simple Python class demonstrating object-oriented programming concepts with properties, setters, and dynamic rules. 
- Tracks employee salary and increment percentage  Automatically adjusts increment based on salary ranges  Allows manual override of increment percentage  Calculates salary after increment
+class Employee:
+    def __init__(self, salary, increment_percent):
+        self._salary = salary
+        self._increment_percent = increment_percent
 
----
+    @property
+    def salary(self):
+        return self._salary
 
-## Features
-- Track employee salary and increment percentage
-- Automatically adjust increment % when salary changes:
-  - Salary > 50,000 → 5%
-  - Salary > 30,000 → 8%
-  - Salary ≤ 30,000 → 10%
-- Allow manual override of increment percentage
-- Calculate salary after increment
+    @salary.setter
+    def salary(self, value):
+        # When salary changes, we can adjust increment dynamically
+        self._salary = value
+        # Example rule: higher salary → lower increment percentage
+        if self._salary > 50000:
+            self._increment_percent = 5
+        elif self._salary > 30000:
+            self._increment_percent = 8
+        else:
+            self._increment_percent = 10
+        
 
----
+    @property
+    def increment(self):
+        return self._increment_percent
+    
 
-## Example Usage
+    @increment.setter
+    def increment(self, value):
+        # Allow manual override of increment percentage
+        self._increment_percent = value
+        
 
-```python
-from employee import Employee
+    @property
+    def salaryAfterIncrement(self):
+        return self._salary + (self._salary * self._increment_percent / 100)
+    
+    
 
-# Create employee with base salary and increment %
+    
+    
+
+
+# Example usage:
 emp = Employee(20000, 10)
-print("Initial Salary:", emp.salary)                # 20000
-print("Increment %:", emp.increment)                # 10
-print("Salary After Increment:", emp.salaryAfterIncrement)  # 22000
+print("Initial Salary:", emp.salary)
+print("Increment %:", emp.increment)
+print("Salary After Increment:", emp.salaryAfterIncrement)
 
 # Update salary → increment adjusts automatically
 emp.salary = 40000
-print("\nUpdated Salary:", emp.salary)              # 40000
-print("Adjusted Increment %:", emp.increment)       # 8
-print("Salary After Increment:", emp.salaryAfterIncrement)  # 43200
+print("\nUpdated Salary:", emp.salary)
+print("Adjusted Increment %:", emp.increment)
+print("Salary After Increment:", emp.salaryAfterIncrement)
 
-# Another employee
-e = Employee(30000, 10)
-print("\nBase Salary:", e.salary)                   # 30000
-print("Salary After Increment:", e.salaryAfterIncrement)    # 33000
+
+
